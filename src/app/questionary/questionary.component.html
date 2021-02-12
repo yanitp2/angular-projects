@@ -1,0 +1,42 @@
+<form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()" novalidate>
+
+  <ng-container *ngFor="let controls of fields">
+		{{controls.label}}
+		<input [type]="controls.type" [formControlName]="controls.label"/>
+      <ng-container *ngFor="let validation of controls.validations">
+        <span *ngIf="dynamicForm.controls[controls.label].touched && dynamicForm.controls[controls.label].errors">
+          <p *ngIf="dynamicForm.controls[controls.label].errors[validation.name]">
+            {{validation.message}}
+          </p>
+        </span>
+    </ng-container>
+    <br>
+  </ng-container>
+  <hr>
+  <ng-container  *ngFor="let item of items">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+
+        <div class="nav-link" id="{{item.linkId}}">{{item.text}}
+          <input *ngIf="item.type=='boolean'"  type="checkbox"  id="{{item.linkId}}" [formControlName]="item.linkId">
+          <input *ngIf="item.type!='boolean' && item.type!='group'"  type="text" id="{{item.linkId}}" [formControlName]="item.linkId">
+
+        </div>
+        <ul class="sub_menu" *ngIf="item.type=='group' &&  item.item">
+                <li *ngFor="let sub_item of item.item"><div class="nav-link" id="{{sub_item.linkId}}">{{sub_item.text}} </div>
+                <div>
+                  <input *ngIf="sub_item.type=='boolean'"  type="checkbox" id="{{sub_item.linkId}}" [formControlName]="sub_item.linkId">
+                  <input *ngIf="sub_item.type!='boolean' && sub_item.type!='group'" type="text" id="{{sub_item.linkId}}" [formControlName]="sub_item.linkId">
+                </div>
+                </li>
+            </ul>
+      </li>
+    </ul>
+  </ng-container>
+
+
+  <br>
+  <input type="submit" [disabled]="!dynamicForm.valid"/>
+
+
+</form>

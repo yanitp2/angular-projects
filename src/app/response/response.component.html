@@ -1,0 +1,18 @@
+
+<h2>Hello {{userName}} !!</h2>
+
+<ng-container  *ngFor="let item of items">
+  <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+     <div class="nav-link" id="{{item.linkId}}">{{item.text}}  </div>
+     <div class="navbar-nav"><label for="{{item.linkId}}" *ngIf="item.type!='group'" id="{{item.linkId}}" >{{item.response}}</label></div>
+      <ul class="sub_menu" *ngIf="item.item ">
+              <li *ngFor="let sub_item of item.item"><div class="nav-link" id="{{sub_item.linkId}}">{{sub_item.text}} </div>
+              <div class="navbar-nav"><label *ngIf="sub_item.type!='group'" type="text" id="{{sub_item.linkId}}" >{{sub_item.response}}</label></div>
+              </li>
+          </ul>
+    </li>
+  </ul>
+</ng-container>
+
+
